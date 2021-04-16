@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý học sinh</title>
+</head>
+<style>
+    td{
+        width: 200px;
+        height: 30px;
+    }
+</style>
+<body>
+<button onclick="addStudent()">Thêm học sinh</button>
+<table id="student-list" border="1px"></table>
+<script>
+    let students = [];
+    let firstName = ['Nguyễn','Đoàn','Trương','Lê','Trần','Hồ','Phạm'];
+    let middleName = ['Văn','Thị','Hồng','Thanh','Thu','Duy','Minh','Công'];
+    let lastName = ["Hòa","Kỷ","Chiến","Tuấn","Tân","Tám"];
+    function randomStudent() {
+        for (let i = 0; i < 20; i++) {
+            let r1 = Math.floor(Math.random()*firstName.length);
+            let r2 = Math.floor(Math.random()*middleName.length);
+            let r3 = Math.floor(Math.random()*lastName.length);
+            let student = firstName[r1]+ ' '+ middleName[r2]+ ' '+lastName[r3];
+            students.push(student);
+        }
+    }
+
+    randomStudent();
+    //Hiển thị học sinh
+    function displayStudent() { //Tên hàm phải là động từ vì nó chỉ 1 hành động nào đó
+        let str = '';
+        for (let i = 0; i < students.length; i++) {
+            str +='<tr>' +
+                '<td>'+students[i]+'</td>' +
+                '<td><button onclick="deleteStudent('+ i +')">Xóa</button></td>' +
+                '<td><button onclick="updateStudent('+ i +')">Sửa</button></td>' +
+                '</tr>';
+        }
+
+        document.getElementById('student-list').innerHTML = str;
+    }
+    displayStudent();
+
+    //Thêm học sinh
+    function addStudent() {
+        let student = prompt("Tên học sinh");
+        students.push(student);
+        displayStudent();
+    }
+    //Chỉnh sửa thông tin
+    function updateStudent(index) {
+        students[index] = prompt("Nhập tên mới của bạn này",students[index]);
+        displayStudent();
+    }
+
+    //Xóa học sinh
+    function deleteStudent(index) {
+        let check = confirm("Bạn có muốn xóa học sinh này không?");
+        if(check){
+            students.splice(index,1);
+            displayStudent();
+        }else {
+            alert("Thôi không xóa nữa");
+        }
+
+    }
+
+</script>
+</body>
+</html>
